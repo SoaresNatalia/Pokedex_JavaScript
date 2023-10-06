@@ -11,8 +11,8 @@ const maxReference = 151
 
 
 function convertPokemonHtml(pokemon){
-    return `
-                <li  class="pokemon ${pokemon.type}" id="modalAbilidades" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-heading="teste texto">
+    return `    
+                <li  class="pokemon ${pokemon.type}" id="modalAbilidades" data-bs-toggle="modal" data-bs-target="#pokeModal${pokemon.name}">
                     <span class="number">${pokemon.number}</span>
                     <span class="name">${pokemon.name}</span> 
 
@@ -24,39 +24,48 @@ function convertPokemonHtml(pokemon){
 
                         <img src="${pokemon.photo}" alt=${pokemon.name}>
 
-                    </div>              
-                    
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+
+                    <div class="modal fade" id="pokeModal${pokemon.name}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content ${pokemon.type}">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">${pokemon.name}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ...
+
+                                <img src="${pokemon.photo}" alt=${pokemon.name}>
+
+                                <div id="modalBodyType"">
+
+                                    <p class="titulo"> Weight: ${pokemon.weight}</p>
+
+                                    <p class="titulo"> Types: </p>
+                                    <ol class="text">                                        
+                                        ${pokemon.types.map((type) => `<li class="type ${pokemon.type}"> ${type} </li>`).join('')}
+                                    </ol>
+
+                                    <p class="titulo"> Abilities: </p>
+                                    <ol class="text">                                        
+                                        ${pokemon.abilities.map((ability) => `<li class="type ${pokemon.ability}"> ${ability} </li>`).join('')}
+                                    </ol>                       
+
+                                    
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                            
                             </div>
                             </div>
                         </div>
-                    </div>                  
+                    </div>               
                     
-                    <script>
-                        const myModal = document.querySelector('#exampleModal');
-                        myModal.addEventListener('show.bs.modal', function (event) {
-                            
-                            const button = event.relatedTarget;
-                            const heading = button.getAttribute('data-bs-heading');
-                
-                            // Set the value for the heading
-                            const title = myModal.querySelector('.modal-header').textContent = heading;
-                                
-                        });
-                    </script>
+                    
+                    
+                    
                 </li>
                 
                 
@@ -102,16 +111,3 @@ loadMoreButton.addEventListener('click', () => {
 })
 
 
-/*Transformando list de <li> em uma unica String
-        const newHtml = newList.join('')
-
-        pokemonHtmlList.innerHTML += newHtml*/
-
-
-
-
-        /* Não precisamos usar o For
-        for (let i = 0; i < pokemonList.length; i++) {
-            const pokemon = pokemonList[i];            
-            pokemonHtmlList.innerHTML += convertPokemonHtml(pokemon);            
-        }*/
